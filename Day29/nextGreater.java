@@ -5,24 +5,30 @@ class Solution {
         // code here
         int n=arr.length;
         ArrayList<Integer> al=new ArrayList<>();
-        int a=-1;
-        boolean same=true;
-        for(int i=0; i<n-1; i++){
-            same=true;
-            for(int j=i+1; j<n; j++){
-                if(arr[j]>arr[i]){
-                    a=arr[j];
-                    same=false;
-                    break;
-                }
-            }
-            if(!same){
-                al.add(a);
-            }else{
-                al.add(-1);
-            }
+        Stack<Integer> s=new Stack<>();
+        int [] result=new int[n];
+        
+        for(int i=0; i<n; i++){
+            result[i]=-1;
         }
-        al.add(-1);
+        
+        for(int i=n-1;i>=0; i--){
+            
+            while(!s.isEmpty()&&s.peek()<=arr[i]){
+                 s.pop();   
+            }
+            
+            if(!s.isEmpty()){
+                result[i]=s.peek();
+            }
+            
+            s.push(arr[i]);
+        }
+        
+        for(int i=0; i<n; i++){
+            al.add(result[i]);
+        }
+        
         return al;
     }
 }
